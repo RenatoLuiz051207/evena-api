@@ -69,6 +69,6 @@ public class LocalizacaoService {
 
     private Localizacao buscarEntidade(Integer id) {
         return localizacaoRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("LocalizaÃ§Ã£o nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Localização não encontrada."));
     }
 }

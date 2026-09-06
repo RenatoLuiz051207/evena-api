@@ -69,6 +69,6 @@ public class EmpresaService {
 
     private Empresa buscarEntidade(Integer id) {
         return empresaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa não encontrada."));
     }
 }

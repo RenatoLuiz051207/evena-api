@@ -87,7 +87,7 @@ public class EventoService {
     @Transactional
     public EventoResponse cadastrar(Integer empresaId, EventoRequest request) {
         Empresa empresa = empresaRepository.findById(empresaId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa não encontrada."));
 
         Evento evento = new Evento();
         evento.setEmpresa(empresa);
@@ -154,7 +154,7 @@ public class EventoService {
 
     public Evento buscarEntidade(Integer id) {
         return eventoRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Evento nÃ£o encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Evento não encontrado."));
     }
 
     private LocalDateTime primeiraData(EventoResponse evento) {

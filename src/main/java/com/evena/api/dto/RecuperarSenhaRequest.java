@@ -8,14 +8,14 @@ import jakarta.validation.constraints.Size;
 public class RecuperarSenhaRequest {
 
     @NotBlank(message = "Digite seu e-mail.")
-    @Email(message = "Digite um e-mail vÃ¡lido.")
+    @Email(message = "Digite um e-mail válido.")
     private String email;
 
     @NotBlank(message = "Digite a nova senha.")
     @Size(min = 8, message = "Use pelo menos 8 caracteres.")
-    @Pattern(regexp = ".*[A-Z].*", message = "Adicione pelo menos uma letra maiÃºscula.")
-    @Pattern(regexp = ".*[a-z].*", message = "Adicione pelo menos uma letra minÃºscula.")
-    @Pattern(regexp = ".*[0-9].*", message = "Adicione pelo menos um nÃºmero.")
+    @Pattern(regexp = ".*[A-Z].*", message = "Adicione pelo menos uma letra maiúscula.")
+    @Pattern(regexp = ".*[a-z].*", message = "Adicione pelo menos uma letra minúscula.")
+    @Pattern(regexp = ".*[0-9].*", message = "Adicione pelo menos um número.")
     private String novaSenha;
 
     public String getEmail() {

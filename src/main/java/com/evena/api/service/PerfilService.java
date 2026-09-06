@@ -37,7 +37,7 @@ public class PerfilService {
         String email = request.getEmail().trim().toLowerCase();
 
         if (perfilRepository.existsByEmailIgnoreCase(email)) {
-            throw new RegraNegocioException("JÃ¡ existe uma conta com esse e-mail.");
+            throw new RegraNegocioException("Já existe uma conta com esse e-mail.");
         }
 
         Perfil perfil = new Perfil(
@@ -51,10 +51,10 @@ public class PerfilService {
 
     public PerfilResponse autenticar(LoginRequest request) {
         Perfil perfil = perfilRepository.findByEmailIgnoreCase(request.getEmail().trim())
-                .orElseThrow(() -> new RegraNegocioException("E-mail ou senha invÃ¡lidos."));
+                .orElseThrow(() -> new RegraNegocioException("E-mail ou senha inválidos."));
 
         if (!passwordEncoder.matches(request.getSenha(), perfil.getSenha())) {
-            throw new RegraNegocioException("E-mail ou senha invÃ¡lidos.");
+            throw new RegraNegocioException("E-mail ou senha inválidos.");
         }
 
         return new PerfilResponse(perfil);
@@ -82,7 +82,7 @@ public class PerfilService {
     @Transactional
     public void recuperarSenha(RecuperarSenhaRequest request) {
         Perfil perfil = perfilRepository.findByEmailIgnoreCase(request.getEmail().trim())
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("E-mail nÃ£o cadastrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("E-mail não cadastrado."));
 
         perfil.alterarSenha(passwordEncoder.encode(request.getNovaSenha()));
         perfilRepository.save(perfil);
@@ -92,7 +92,7 @@ public class PerfilService {
     public void adicionarFavorito(Integer perfilId, Integer eventoId) {
         Perfil perfil = buscarEntidade(perfilId);
         Evento evento = eventoRepository.findById(eventoId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Evento nÃ£o encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Evento não encontrado."));
 
         EventoPerfilId id = new EventoPerfilId(eventoId, perfilId);
 
@@ -117,6 +117,6 @@ public class PerfilService {
 
     public Perfil buscarEntidade(Integer id) {
         return perfilRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Perfil nÃ£o encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Perfil não encontrado."));
     }
 }

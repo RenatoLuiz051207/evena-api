@@ -29,7 +29,7 @@ public class ApiExceptionHandler {
                 .stream()
                 .findFirst()
                 .map(erro -> erro.getDefaultMessage())
-                .orElse("Dados invÃ¡lidos.");
+                .orElse("Dados inválidos.");
 
         return ResponseEntity.badRequest()
                 .body(new ErroResponse(mensagem));

@@ -33,7 +33,7 @@ public class PerfilInsignia {
     }
 
     public void concluirMissao() {
-        this.missao = "ConcluÃ­da";
+        this.missao = "Concluída";
     }
 
     public PerfilInsigniaId getId() {

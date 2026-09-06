@@ -46,6 +46,6 @@ public class LocalizacaoController {
     @DeleteMapping("/{id}")
     public MensagemResponse remover(@PathVariable Integer id) {
         localizacaoService.remover(id);
-        return new MensagemResponse("LocalizaÃ§Ã£o removida com sucesso.");
+        return new MensagemResponse("Localização removida com sucesso.");
     }
 }

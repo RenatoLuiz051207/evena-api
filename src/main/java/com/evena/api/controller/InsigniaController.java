@@ -43,7 +43,7 @@ public class InsigniaController {
     @DeleteMapping("/insignias/{id}")
     public MensagemResponse remover(@PathVariable Integer id) {
         insigniaService.remover(id);
-        return new MensagemResponse("InsÃ­gnia removida com sucesso.");
+        return new MensagemResponse("Insígnia removida com sucesso.");
     }
 
     @PostMapping("/perfis/{perfilId}/insignias/{insigniaId}")

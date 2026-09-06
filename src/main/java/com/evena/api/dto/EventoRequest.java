@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 public class EventoRequest {
 
-    @NotBlank(message = "Digite o tÃ­tulo do evento.")
+    @NotBlank(message = "Digite o título do evento.")
     private String titulo;
 
     private Boolean status;
@@ -13,7 +13,7 @@ public class EventoRequest {
     private String banner;
     private String capa;
 
-    @NotBlank(message = "Digite a descriÃ§Ã£o do evento.")
+    @NotBlank(message = "Digite a descrição do evento.")
     private String descricao;
 
     private BigDecimal preco;

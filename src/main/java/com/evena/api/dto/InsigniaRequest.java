@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class InsigniaRequest {
 
-    @NotBlank(message = "Digite o nome da insÃ­gnia.")
+    @NotBlank(message = "Digite o nome da insígnia.")
     private String nome;
 
     private String icone;

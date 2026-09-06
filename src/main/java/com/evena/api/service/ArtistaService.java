@@ -73,6 +73,6 @@ public class ArtistaService {
 
     private Artista buscarEntidade(Integer id) {
         return artistaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista nÃ£o encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista não encontrado."));
     }
 }

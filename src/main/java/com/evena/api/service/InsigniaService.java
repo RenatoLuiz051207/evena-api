@@ -64,7 +64,7 @@ public class InsigniaService {
     public PerfilInsignia concluirMissao(Integer perfilId, Integer insigniaId) {
         PerfilInsignia relacao = perfilInsigniaRepository
                 .findById(new PerfilInsigniaId(perfilId, insigniaId))
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("InsÃ­gnia do perfil nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Insígnia do perfil não encontrada."));
 
         relacao.concluirMissao();
         return perfilInsigniaRepository.save(relacao);
@@ -77,6 +77,6 @@ public class InsigniaService {
 
     private Insignia buscarEntidade(Integer id) {
         return insigniaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("InsÃ­gnia nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Insígnia não encontrada."));
     }
 }

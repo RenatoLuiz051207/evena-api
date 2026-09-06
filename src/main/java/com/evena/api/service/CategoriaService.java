@@ -35,7 +35,7 @@ public class CategoriaService {
     public Categoria cadastrar(CategoriaRequest request) {
         Evento evento = eventoService.buscarEntidade(request.getEventoId());
         Artista artista = artistaRepository.findById(request.getArtistaId())
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista nÃ£o encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista não encontrado."));
 
         Categoria categoria = new Categoria();
         categoria.setEvento(evento);
@@ -59,6 +59,6 @@ public class CategoriaService {
 
     private Categoria buscarEntidade(Integer id) {
         return categoriaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Categoria nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Categoria não encontrada."));
     }
 }

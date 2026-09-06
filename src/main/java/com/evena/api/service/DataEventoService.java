@@ -46,6 +46,6 @@ public class DataEventoService {
 
     private DataEvento buscarEntidade(Integer id) {
         return dataEventoRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Data do evento nÃ£o encontrada."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Data do evento não encontrada."));
     }
 }

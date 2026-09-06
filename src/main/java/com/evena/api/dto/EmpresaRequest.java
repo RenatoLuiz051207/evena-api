@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class EmpresaRequest {
 
-    @NotNull(message = "Informe o perfil responsÃ¡vel.")
+    @NotNull(message = "Informe o perfil responsável.")
     private Integer perfilId;
 
     private String cnpj;
