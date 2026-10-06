@@ -6,7 +6,6 @@ public class ArtistaRequest {
 
     @NotBlank(message = "Digite o nome do artista.")
     private String nome;
-
     private String obras;
     private String foto;
 

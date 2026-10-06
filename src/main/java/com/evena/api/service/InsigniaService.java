@@ -2,6 +2,7 @@ package com.evena.api.service;
 
 import com.evena.api.dto.InsigniaRequest;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
+import com.evena.api.mapper.InsigniaMapper;
 import com.evena.api.model.*;
 import com.evena.api.repository.InsigniaRepository;
 import com.evena.api.repository.PerfilInsigniaRepository;
@@ -16,13 +17,16 @@ public class InsigniaService {
     private final InsigniaRepository insigniaRepository;
     private final PerfilInsigniaRepository perfilInsigniaRepository;
     private final PerfilService perfilService;
+    private final InsigniaMapper insigniaMapper;
 
     public InsigniaService(InsigniaRepository insigniaRepository,
                            PerfilInsigniaRepository perfilInsigniaRepository,
-                           PerfilService perfilService) {
+                           PerfilService perfilService,
+                           InsigniaMapper insigniaMapper) {
         this.insigniaRepository = insigniaRepository;
         this.perfilInsigniaRepository = perfilInsigniaRepository;
         this.perfilService = perfilService;
+        this.insigniaMapper = insigniaMapper;
     }
 
     public List<Insignia> listar() {
@@ -31,8 +35,8 @@ public class InsigniaService {
 
     @Transactional
     public Insignia cadastrar(InsigniaRequest request) {
-        Insignia insignia = new Insignia();
-        insignia.editarDados(request.getNome().trim(), request.getIcone());
+        Insignia insignia = insigniaMapper.toEntity(request);
+
         return insigniaRepository.save(insignia);
     }
 

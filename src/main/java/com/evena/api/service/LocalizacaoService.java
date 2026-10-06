@@ -2,6 +2,7 @@ package com.evena.api.service;
 
 import com.evena.api.dto.LocalizacaoRequest;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
+import com.evena.api.mapper.LocalizacaoMapper;
 import com.evena.api.model.Evento;
 import com.evena.api.model.Localizacao;
 import com.evena.api.repository.LocalizacaoRepository;
@@ -15,10 +16,14 @@ public class LocalizacaoService {
 
     private final LocalizacaoRepository localizacaoRepository;
     private final EventoService eventoService;
+    private final LocalizacaoMapper localizacaoMapper;
 
-    public LocalizacaoService(LocalizacaoRepository localizacaoRepository, EventoService eventoService) {
+    public LocalizacaoService(LocalizacaoRepository localizacaoRepository,
+                              EventoService eventoService,
+                              LocalizacaoMapper localizacaoMapper) {
         this.localizacaoRepository = localizacaoRepository;
         this.eventoService = eventoService;
+        this.localizacaoMapper = localizacaoMapper;
     }
 
     public List<Localizacao> listar() {
@@ -36,9 +41,9 @@ public class LocalizacaoService {
     public Localizacao cadastrar(LocalizacaoRequest request) {
         Evento evento = eventoService.buscarEntidade(request.getEventoId());
 
-        Localizacao localizacao = new Localizacao();
+        Localizacao localizacao = localizacaoMapper.toEntity(request);
+
         localizacao.setEvento(evento);
-        aplicarDados(localizacao, request);
 
         return localizacaoRepository.save(localizacao);
     }

@@ -6,7 +6,7 @@ public class PerfilAtualizacaoRequest {
 
     @NotBlank(message = "Digite seu nome.")
     private String nome;
-
+    private String email;
     private String telefone;
     private String foto;
     private String banner;
@@ -19,6 +19,10 @@ public class PerfilAtualizacaoRequest {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     public String getTelefone() {
         return telefone;

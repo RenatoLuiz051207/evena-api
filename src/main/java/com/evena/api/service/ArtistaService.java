@@ -2,6 +2,7 @@ package com.evena.api.service;
 
 import com.evena.api.dto.ArtistaRequest;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
+import com.evena.api.mapper.ArtistaMapper;
 import com.evena.api.model.Artista;
 import com.evena.api.model.Evento;
 import com.evena.api.model.EventoArtista;
@@ -19,13 +20,16 @@ public class ArtistaService {
     private final ArtistaRepository artistaRepository;
     private final EventoArtistaRepository eventoArtistaRepository;
     private final EventoService eventoService;
+    private final ArtistaMapper artistaMapper;
 
     public ArtistaService(ArtistaRepository artistaRepository,
                           EventoArtistaRepository eventoArtistaRepository,
-                          EventoService eventoService) {
+                          EventoService eventoService,
+                          ArtistaMapper artistaMapper) {
         this.artistaRepository = artistaRepository;
         this.eventoArtistaRepository = eventoArtistaRepository;
         this.eventoService = eventoService;
+        this.artistaMapper = artistaMapper;
     }
 
     public List<Artista> listar() {
@@ -38,8 +42,8 @@ public class ArtistaService {
 
     @Transactional
     public Artista cadastrar(ArtistaRequest request) {
-        Artista artista = new Artista();
-        artista.editarDados(request.getNome().trim(), request.getObras(), request.getFoto());
+        Artista artista = artistaMapper.toEntity(request);
+
         return artistaRepository.save(artista);
     }
 
@@ -57,6 +61,7 @@ public class ArtistaService {
 
     @Transactional
     public void adicionarArtista(Integer eventoId, Integer artistaId) {
+
         Evento evento = eventoService.buscarEntidade(eventoId);
         Artista artista = buscarEntidade(artistaId);
         EventoArtistaId id = new EventoArtistaId(eventoId, artistaId);
@@ -72,7 +77,6 @@ public class ArtistaService {
     }
 
     private Artista buscarEntidade(Integer id) {
-        return artistaRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista não encontrado."));
+        return artistaRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Artista não encontrado."));
     }
 }

@@ -4,6 +4,7 @@ import com.evena.api.dto.EmpresaRequest;
 import com.evena.api.dto.EventoRequest;
 import com.evena.api.dto.EventoResponse;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
+import com.evena.api.mapper.EmpresaMapper;
 import com.evena.api.model.Empresa;
 import com.evena.api.model.Perfil;
 import com.evena.api.repository.EmpresaRepository;
@@ -18,13 +19,16 @@ public class EmpresaService {
     private final EmpresaRepository empresaRepository;
     private final PerfilService perfilService;
     private final EventoService eventoService;
+    private final EmpresaMapper empresaMapper;
 
     public EmpresaService(EmpresaRepository empresaRepository,
                           PerfilService perfilService,
-                          EventoService eventoService) {
+                          EventoService eventoService,
+                          EmpresaMapper empresaMapper) {
         this.empresaRepository = empresaRepository;
         this.perfilService = perfilService;
         this.eventoService = eventoService;
+        this.empresaMapper = empresaMapper;
     }
 
     public List<Empresa> listar() {
@@ -34,10 +38,10 @@ public class EmpresaService {
     @Transactional
     public Empresa cadastrar(EmpresaRequest request) {
         Perfil perfil = perfilService.buscarEntidade(request.getPerfilId());
-        Empresa empresa = new Empresa();
+        Empresa empresa = empresaMapper.toEntity(request);
+
         empresa.setPerfil(perfil);
-        empresa.editarDados(request.getCnpj(), request.getNome().trim(),
-                request.getEndereco(), request.getSetor());
+
         return empresaRepository.save(empresa);
     }
 

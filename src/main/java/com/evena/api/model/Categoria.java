@@ -15,8 +15,8 @@ public class Categoria {
     @JoinColumn(name = "Evento_id_eve", nullable = false)
     private Evento evento;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "Artista_id_art", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "Artista_id_art")
     private Artista artista;
 
     @Column(name = "tipo_cat", length = 50)

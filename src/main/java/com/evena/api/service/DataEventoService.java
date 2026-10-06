@@ -2,6 +2,7 @@ package com.evena.api.service;
 
 import com.evena.api.dto.DataEventoRequest;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
+import com.evena.api.mapper.DataEventoMapper;
 import com.evena.api.model.DataEvento;
 import com.evena.api.model.Evento;
 import com.evena.api.repository.DataEventoRepository;
@@ -15,16 +16,25 @@ public class DataEventoService {
 
     private final DataEventoRepository dataEventoRepository;
     private final EventoService eventoService;
+    private final DataEventoMapper dataEventoMapper;
 
-    public DataEventoService(DataEventoRepository dataEventoRepository, EventoService eventoService) {
+    public DataEventoService(DataEventoRepository dataEventoRepository,
+                             EventoService eventoService,
+                             DataEventoMapper dataEventoMapper) {
         this.dataEventoRepository = dataEventoRepository;
         this.eventoService = eventoService;
+        this.dataEventoMapper = dataEventoMapper;
     }
 
     @Transactional
     public DataEvento adicionarData(Integer eventoId, DataEventoRequest request) {
         Evento evento = eventoService.buscarEntidade(eventoId);
-        return dataEventoRepository.save(new DataEvento(evento, request.getDataHora()));
+
+        DataEvento dataEvento = dataEventoMapper.toEntity(request);
+
+        dataEvento.setEvento(evento);
+
+        return dataEventoRepository.save(dataEvento);
     }
 
     @Transactional

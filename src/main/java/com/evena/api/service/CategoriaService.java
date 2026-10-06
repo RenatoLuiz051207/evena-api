@@ -2,6 +2,7 @@ package com.evena.api.service;
 
 import com.evena.api.dto.CategoriaRequest;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
+import com.evena.api.mapper.CategoriaMapper;
 import com.evena.api.model.Artista;
 import com.evena.api.model.Categoria;
 import com.evena.api.model.Evento;
@@ -18,13 +19,16 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
     private final ArtistaRepository artistaRepository;
     private final EventoService eventoService;
+    private final CategoriaMapper categoriaMapper;
 
     public CategoriaService(CategoriaRepository categoriaRepository,
                             ArtistaRepository artistaRepository,
-                            EventoService eventoService) {
+                            EventoService eventoService,
+                            CategoriaMapper categoriaMapper) {
         this.categoriaRepository = categoriaRepository;
         this.artistaRepository = artistaRepository;
         this.eventoService = eventoService;
+        this.categoriaMapper = categoriaMapper;
     }
 
     public List<Categoria> listar() {
@@ -33,14 +37,19 @@ public class CategoriaService {
 
     @Transactional
     public Categoria cadastrar(CategoriaRequest request) {
-        Evento evento = eventoService.buscarEntidade(request.getEventoId());
-        Artista artista = artistaRepository.findById(request.getArtistaId())
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista não encontrado."));
 
-        Categoria categoria = new Categoria();
+        Evento evento = eventoService.buscarEntidade(request.getEventoId());
+
+        Artista artista = null;
+        if (request.getArtistaId() != null) {
+            artista = artistaRepository.findById(request.getArtistaId())
+                    .orElseThrow(() -> new EntidadeNaoEncontradaException("Artista não encontrado."));
+        }
+
+        Categoria categoria = categoriaMapper.toEntity(request);
+
         categoria.setEvento(evento);
         categoria.setArtista(artista);
-        categoria.editarDados(request.getTipo().trim(), request.getEstilo(), request.getFoto());
 
         return categoriaRepository.save(categoria);
     }

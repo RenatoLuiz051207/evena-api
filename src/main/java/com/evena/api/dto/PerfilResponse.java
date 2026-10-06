@@ -14,9 +14,6 @@ public class PerfilResponse {
     private String banner;
     private String descricao;
 
-    public PerfilResponse() {
-    }
-
     public PerfilResponse(Perfil perfil) {
         this.id = perfil.getId();
         this.nome = perfil.getNome();

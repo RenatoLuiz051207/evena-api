@@ -3,6 +3,7 @@ package com.evena.api.service;
 import com.evena.api.dto.*;
 import com.evena.api.exception.EntidadeNaoEncontradaException;
 import com.evena.api.exception.RegraNegocioException;
+import com.evena.api.mapper.PerfilMapper;
 import com.evena.api.model.*;
 import com.evena.api.repository.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,17 +20,20 @@ public class PerfilService {
     private final EventoPerfilRepository eventoPerfilRepository;
     private final PasswordEncoder passwordEncoder;
     private final EventoService eventoService;
+    private final PerfilMapper perfilMapper;
 
     public PerfilService(PerfilRepository perfilRepository,
                          EventoRepository eventoRepository,
                          EventoPerfilRepository eventoPerfilRepository,
                          PasswordEncoder passwordEncoder,
-                         EventoService eventoService) {
+                         EventoService eventoService,
+                         PerfilMapper perfilMapper) {
         this.perfilRepository = perfilRepository;
         this.eventoRepository = eventoRepository;
         this.eventoPerfilRepository = eventoPerfilRepository;
         this.passwordEncoder = passwordEncoder;
         this.eventoService = eventoService;
+        this.perfilMapper = perfilMapper;
     }
 
     @Transactional
@@ -46,7 +50,9 @@ public class PerfilService {
                 passwordEncoder.encode(request.getSenha())
         );
 
-        return new PerfilResponse(perfilRepository.save(perfil));
+        Perfil perfilSalvo = perfilRepository.save(perfil);
+
+        return perfilMapper.toResponse(perfilSalvo);
     }
 
     public PerfilResponse autenticar(LoginRequest request) {
@@ -57,11 +63,13 @@ public class PerfilService {
             throw new RegraNegocioException("E-mail ou senha inválidos.");
         }
 
-        return new PerfilResponse(perfil);
+        return perfilMapper.toResponse(perfil);
     }
 
     public PerfilResponse buscar(Integer id) {
-        return new PerfilResponse(buscarEntidade(id));
+        Perfil perfil = buscarEntidade(id);
+
+        return perfilMapper.toResponse(perfil);
     }
 
     @Transactional
@@ -76,7 +84,9 @@ public class PerfilService {
                 request.getDescricao()
         );
 
-        return new PerfilResponse(perfilRepository.save(perfil));
+        Perfil perfilSalvo = perfilRepository.save(perfil);
+
+        return perfilMapper.toResponse(perfilSalvo);
     }
 
     @Transactional
@@ -116,7 +126,6 @@ public class PerfilService {
     }
 
     public Perfil buscarEntidade(Integer id) {
-        return perfilRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Perfil não encontrado."));
+        return perfilRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Perfil não encontrado."));
     }
 }

@@ -8,7 +8,6 @@ public class CategoriaRequest {
     @NotNull(message = "Informe o evento.")
     private Integer eventoId;
 
-    @NotNull(message = "Informe o artista.")
     private Integer artistaId;
 
     @NotBlank(message = "Digite o tipo da categoria.")
